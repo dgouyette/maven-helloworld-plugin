@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+  
+  <!-- Description de l'artifact -->
+    <groupId>com.cestpasdur.maven</groupId>
+    <artifactId>maven-helloworld-plugin</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>Exemple Groovy Mojo - maven-helloworld-plugin</name>
+  
+  <!-- Les plugins maven ont leur packaging propre-->
+    <packaging>maven-plugin</packaging>
+
+    <properties>
+        <gmaven.version>1.0-rc-4</gmaven.version>
+
+    </properties>
+
+ <!-- Dépendances --> 
+    <dependencies>
+        <dependency>
+            <groupId>org.codehaus.groovy.maven</groupId>
+            <artifactId>gmaven-mojo</artifactId>
+            <version>${gmaven.version}</version>
+        </dependency>
+    </dependencies>
+  
+  
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <!-- Permet de spécifier l'encoding en UTF8 lors du traitement des ressources-->
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            
+
+            <!-- Permet de générer les descripteurs de mojo présents dans le code source-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <!-- Permet de spécifier l'encoding en UTF8 lors du traitement des descripteurs de mojo-->
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+             
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>groovy-maven-plugin</artifactId>
+                <version>${gmaven.version}</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!-- Génère les stubs java à partir de mojo groovy -->
+                            <goal>generateStubs</goal>
+
+                           <!-- Compile le code source groovy-->
+                            <goal>compile</goal>
+
+                            <!-- Génère les stubs java à partir de mojo groovy  pour les Tests unitaires (TU)-->
+                            <goal>generateTestStubs</goal>
+
+                            <!-- Compile le code source des TU groovy-->
+                            <goal>testCompile</goal>
+
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
